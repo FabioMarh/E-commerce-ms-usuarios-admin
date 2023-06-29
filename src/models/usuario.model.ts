@@ -1,5 +1,4 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
-import {Rol} from './rol.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
 export class Usuario extends Entity {
@@ -40,9 +39,13 @@ export class Usuario extends Entity {
   })
   estado?: boolean;
 
-  @hasOne(() => Rol, {keyTo: 'id_rol'})
-  tiene_un: Rol;
+  /**
+   **relacion posiblemente erronea.
+   *parece ser que esta propiedad no hace parte del modelo y va a ser necesario volver a establecer las relaciones en el controlador
 
+   @hasOne(() => Rol, {keyTo: 'id_rol'})
+  tiene_un: Rol;
+  */
   @property({
     type: 'string',
   })

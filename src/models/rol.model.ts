@@ -1,7 +1,7 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {Usuario} from './usuario.model';
-import {Permiso} from './permiso.model';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {PermisoRol} from './permiso-rol.model';
+import {Permiso} from './permiso.model';
+import {Usuario} from './usuario.model';
 
 @model()
 export class Rol extends Entity {
@@ -18,22 +18,28 @@ export class Rol extends Entity {
   })
   nombre: string;
 
-  @property({
+  /**
+ **esta propiedad posilemente no va
+
+   @property({
     type: 'array',
     itemType: 'string',
     required: true,
   })
   permisos: string[];
-
-  @property({
+*/
+  /* parece ser que esta propiedad no hace parte del modelo y va a ser necesario volver a establecer las relaciones en el controlador
+@property({
     type: 'string',
   })
   id_rol?: string;
-
+*/
   @hasMany(() => Usuario, {keyTo: 'id_rol'})
   usuarios: Usuario[];
 
-  @hasMany(() => Permiso, {through: {model: () => PermisoRol, keyFrom: 'id_rol', keyTo: 'id_permiso'}})
+  @hasMany(() => Permiso, {
+    through: {model: () => PermisoRol, keyFrom: 'id_rol', keyTo: 'id_permiso'},
+  })
   tiene_permisos: Permiso[];
 
   constructor(data?: Partial<Rol>) {
